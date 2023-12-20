@@ -10,8 +10,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float lineLength;
     [SerializeField] float offset;
     [SerializeField] bool isJumping;
-   
 
+    [SerializeField] ParticleSystem jumpParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && !isJumping)
         {
             GetComponent<Rigidbody2D>().AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            jumpParticles.Play();
+
             AudioManager.instance.PlaySFX("Jump");
         }
 
