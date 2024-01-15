@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float lineLength;
     [SerializeField] float offset;
     [SerializeField] bool isJumping;
+    [SerializeField] int score;
 
     [SerializeField] ParticleSystem jumpParticles;
 
@@ -83,9 +86,17 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
-    private void CreateDust() 
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-    
+        if (collision != null)
+        {
+            if (collision.CompareTag("Coin"))
+            {
+                AudioManager.instance.PlaySFX("Coin");
+                GameObject.Find("Score").GetComponent<TextMeshProUGUI>().text = "Coins: " + ++score;
+                Destroy(collision.gameObject);
+            }
+
+        }
     }
 }
